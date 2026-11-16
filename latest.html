@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Energy & Carbon Estimation Dashboard | EVS Hyderabad Case Study</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="tag">EVS Case Study · Hyderabad, Telangana · India grid FY 2025–26</p>
+    <h1>Smart Energy &amp; Carbon Estimation Dashboard</h1>
+    <p>Audit your household power use, estimate its carbon footprint, and find the smartest ways to cut both.</p>
+    <div class="btns"><button id="reset">Reset to sample data</button><button onclick="window.print()">Print report</button></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <h2>Your inputs</h2>
+    <div class="grid">
+      <label>Tariff (₹ per unit)<input class="f" id="tariff" type="number" min="0" step="0.1"></label>
+      <label>Grid factor (kg CO₂ per kWh)<input class="f" id="factor" type="number" min="0" step="0.001"></label>
+      <label>Last month's use (kWh)<input class="f" id="last" type="number" min="0"></label>
+      <label>Monthly CO₂ budget (kg)<input class="f" id="budget" type="number" min="0"></label>
+    </div>
+    <p class="note">Sample values: ₹8 tariff, 0.675 kg/kWh (all-India average grid factor), 420 kWh last month, 250 kg budget. Change them to match your bill.</p>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><span>Monthly energy</span><b id="kwh"></b><small id="kwhNote"></small></div>
+    <div class="stat"><span>Estimated bill (₹)</span><b id="bill"></b><small id="billNote"></small></div>
+    <div class="stat"><span>Carbon footprint (kg CO₂/mo)</span><b id="co2"></b><small id="co2Note"></small></div>
+    <div class="stat"><span>Eco score</span><b id="score"></b><small id="scoreNote"></small></div>
+  </div>
+
+  <section>
+    <h2>Carbon budget tracker</h2>
+    <div class="bar big"><i id="fill"></i></div>
+    <p id="goalMsg"></p>
+    <p id="cmpMsg" class="note"></p>
+  </section>
+
+  <section>
+    <h2>Appliance inventory</h2>
+    <div class="add">
+      <select id="preset" aria-label="Choose an appliance preset"></select>
+      <button id="add">Add appliance</button>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Appliance</th><th>Watts</th><th>Hours/day</th><th>Qty</th><th>kWh/day</th><th>kWh/month</th><th>CO₂/month (kg)</th><th></th></tr></thead>
+        <tbody id="tbody"></tbody>
+        <tfoot><tr><td>Totals</td><td id="tw"></td><td></td><td></td><td id="td"></td><td id="tm"></td><td id="tc"></td><td></td></tr></tfoot>
+      </table>
+    </div>
+    <p class="note">Daily kWh = watts × hours × quantity ÷ 1000. Monthly = daily × 30. CO₂ = monthly kWh × grid factor.</p>
+  </section>
+
+  <section>
+    <h2>Where your energy goes</h2>
+    <div id="share"></div>
+  </section>
+
+  <section>
+    <h2>Smart energy insights</h2>
+    <ul id="insights"></ul>
+    <div class="tips">
+      <div class="tip"><h3>AC set-point</h3>
+        <div class="grid"><label>Now (°C)<input class="f" id="setFrom" type="number"></label><label>Target (°C)<input class="f" id="setTo" type="number"></label></div>
+        <p id="t1"></p></div>
+      <div class="tip"><h3>Switch to LED</h3>
+        <div class="grid"><label>Old bulb (W)<input class="f" id="oldW" type="number"></label><label>LED (W)<input class="f" id="ledW" type="number"></label><label>Bulbs<input class="f" id="bulbs" type="number"></label><label>Hours/day<input class="f" id="bulbH" type="number"></label></div>
+        <p id="t2"></p></div>
+      <div class="tip"><h3>Cut standby power</h3>
+        <div class="grid"><label>Watts each<input class="f" id="sbW" type="number" step="0.1"></label><label>Devices<input class="f" id="sbN" type="number"></label><label>Idle hours/day<input class="f" id="sbH" type="number"></label></div>
+        <p id="t3"></p></div>
+      <div class="tip"><h3>Rooftop solar</h3>
+        <div class="grid"><label>Size (kW)<input class="f" id="solarKw" type="number" step="0.5"></label><label>kWh per kW per day<input class="f" id="solarYield" type="number" step="0.1"></label></div>
+        <p id="t4"></p></div>
+    </div>
+    <p id="tipTotal"></p>
+    <p class="note">The AC tip assumes roughly 6% less AC energy per 1 °C increase, capped at 24%. Solar yield of 4 kWh per kW per day is an assumption: edit it to your site.</p>
+  </section>
+
+  <section>
+    <h2>Sustainable Development Goals</h2>
+    <div class="sdg"><span>SDG 7 · Affordable &amp; clean energy</span><span>SDG 9 · Industry &amp; innovation</span><span>SDG 11 · Sustainable cities</span><span>SDG 12 · Responsible consumption</span><span>SDG 13 · Climate action</span></div>
+  </section>
+</main>
+
+<footer>
+  These are estimates, not metered readings. The grid factor is an all-India average and your local mix may differ. Appliance watts and hours are your own inputs. Data stays in your browser (localStorage).<br>
+  Environmental Studies (EVS) case study prototype · Hyderabad urban energy audit
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
